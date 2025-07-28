@@ -1,30 +1,45 @@
-struct User {
-    active: bool, 
-    username: String,
-    email: String,
-    sign_in_count: u64,
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32
 }
 
-struct vec3(i32, i32, i32);
+// Methods go here
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
 
-struct test_struct;
+    fn can_hold(&self, other : &Rectangle) -> bool {
+        self.area() >= other.area()
+    }
+
+    // Constructor-Like
+    fn square(size : u32) -> Self {
+        Self {
+            width: size,
+            height: size
+        }
+    }
+}
 
 fn main() {
-    let my_user = build_user(String::from("John"), String::from("John@gmail.com"));
-    println!("Username: {}\nEmail: {}", my_user.username, my_user.email);
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    let rect2 = Rectangle {
+        width: 10,
+        height: 40,
+    };
+    let rect3 = Rectangle {
+        width: 60,
+        height: 45,
+    };
 
-    let v = vec3(1, 2, 3);
-    let vec3(x, y, z) = v;
-    println!("X = {x}\nY = {y}\nZ = {z}");
+    let square1 = Rectangle::square(100);
+    dbg!(square1);
 
-    let subject = test_struct;
-}
-
-fn build_user(username : String, email : String) -> User {
-    User {
-        username,
-        active: false,
-        email,
-        sign_in_count : 0
-    }
+    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2)); // True
+    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3)); // False
 }
